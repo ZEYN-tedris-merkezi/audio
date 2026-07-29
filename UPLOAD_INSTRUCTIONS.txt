@@ -1,25 +1,8 @@
-ZEYN LISTENING PORTAL V4
+ZEYN ENGLISH PORTAL V5
 
-UPLOAD
-1. Extract the ZIP.
-2. Copy ALL files into the root of the GitHub repository named audio.
-3. Replace existing files.
-4. Commit to main.
-5. Push origin.
+Upload all files to the root of the GitHub audio repository, replace old files, commit, and push.
 
-OPEN
-https://zeyn-tedris-merkezi.github.io/audio/?v=4
+Open:
+https://zeyn-tedris-merkezi.github.io/audio/?v=5
 
-IMPORTANT
-Because an older Service Worker may remain in the browser:
-- Open the new link in Incognito first, or
-- Press Ctrl+F5.
-- If needed: Chrome Settings > Privacy > Site settings > View permissions/data
-  and remove stored data for zeyn-tedris-merkezi.github.io.
-
-OFFLINE TEST
-1. Open a test while online.
-2. Press Download for Offline.
-3. Wait for “Saved Offline”.
-4. Turn off internet.
-5. Reload that same test.
+Use Incognito or Ctrl+F5 if an older version appears.

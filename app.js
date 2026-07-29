@@ -57,6 +57,8 @@ function setupIndex(){
   if($('#remainingCount')) $('#remainingCount').textContent = remain;
   if($('#progressText')) $('#progressText').textContent = `${done} of 27 tests completed`;
   if($('#progressBar')) $('#progressBar').style.width = `${pct}%`;
+  if($('#progressPercent')) $('#progressPercent').textContent = `${pct}%`;
+  if($('#progressRing')) $('#progressRing').style.background = `conic-gradient(var(--primary) ${pct*3.6}deg,var(--surface-2) 0deg)`;
 
   $('#search')?.addEventListener('input', e=>{
     const q = e.target.value.trim().toLowerCase();
@@ -130,11 +132,13 @@ function setupPlayer(){
   audio.addEventListener('play', ()=>{
     setStatus('Listening…','playing');
     updatePlayIcon();
+    $('#waveform')?.classList.add('playing');
   });
 
   audio.addEventListener('pause', ()=>{
     if(!audio.ended) setStatus('Paused');
     updatePlayIcon();
+    $('#waveform')?.classList.remove('playing');
   });
 
   audio.addEventListener('timeupdate', ()=>{
@@ -142,6 +146,8 @@ function setupPlayer(){
     bar.style.width = `${pct}%`;
     time.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
     percent.textContent = `${Math.round(pct)}%`;
+    if($('#currentBig')) $('#currentBig').textContent = fmt(audio.currentTime);
+    if($('#durationBig')) $('#durationBig').textContent = fmt(audio.duration);
     localStorage.setItem(`zeyn-progress-${test}`, String(audio.currentTime));
   });
 
