@@ -34,16 +34,22 @@
     audio {
       width: 100%;
     }
+    .fallback {
+      display: inline-block;
+      margin-top: 18px;
+      color: #2563eb;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <main class="card">
     <h1>Movers Test 12</h1>
     <p>Listening Audio</p>
-    <audio controls preload="metadata">
-      <source src="https://zeyn-tedris-merkezi.github.io/audio/Movers%20Test%2012.mp3" type="audio/mpeg">
+    <audio controls preload="metadata" src="https://zeyn-tedris-merkezi.github.io/audio/Movers%20Test%2012.mp3">
       Your browser does not support audio playback.
     </audio>
+    <a class="fallback" href="https://zeyn-tedris-merkezi.github.io/audio/Movers%20Test%2012.mp3">Open audio directly</a>
   </main>
 </body>
 </html>
