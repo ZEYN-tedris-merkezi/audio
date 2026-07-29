@@ -1,37 +1,33 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Movers Test 13 | ZEYN</title><link rel="icon" href="favicon.png"><link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css"><meta name="theme-color" content="#2846b8"></head>
-<body data-test="13">
-<div class="loading" id="loading"><img src="zeyn-logo.png" alt="ZEYN"></div>
-<div class="shell">
-<header class="topbar"><a class="brand" href="index.html"><img src="zeyn-logo.png"><div class="brand-copy"><strong>ZEYN</strong><span>Listening Portal</span></div></a>
-<div class="actions"><button class="pill-btn" id="installBtn" style="display:none">⬇ Install App</button><button class="pill-btn" id="themeBtn">🌙 Dark mode</button></div></header>
-<main class="card">
-<div class="player-head"><div class="player-title"><div class="badges"><span class="badge">CAMBRIDGE MOVERS</span><span class="badge">TEST 13 OF 27</span></div>
-<h1>Movers Test 13</h1><p>Listen carefully and complete the tasks in your book.</p><div class="rating">★★★★★</div></div>
-<div class="status" id="status"><span class="dot"></span><span id="statusText">Ready to play</span></div></div>
-<section class="player-box">
-<audio id="audio" controls preload="metadata" src="https://zeyn-tedris-merkezi.github.io/audio/Movers%20Test%2013.mp3">Your browser does not support audio playback.</audio>
-<div class="custom-progress" id="progress"><span id="bar"></span></div>
-<div class="time-row"><span id="timeText">0:00 / 0:00</span><span id="percentText">0%</span></div>
-<div class="tools"><button class="tool-btn" id="playBtn">Play / Pause</button><button class="tool-btn" id="backBtn">↶ 10 sec</button>
-<button class="tool-btn" id="forwardBtn">10 sec ↷</button><select class="speed" id="speed"><option value=".75">0.75×</option><option value="1">1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
-<button class="tool-btn" id="restartBtn">Restart</button></div>
+<meta name="theme-color" content="#2d49bd"><link rel="stylesheet" href="styles.css"></head>
+<body data-test="13"><div class="loading" id="loading"><img src="zeyn-logo.png" alt="ZEYN"></div>
+<div class="shell"><header class="topbar">
+<a class="brand" href="index.html"><img src="zeyn-logo.png" alt="ZEYN"><div><strong>ZEYN</strong><span>English Listening Portal</span></div></a>
+<div class="actions"><button class="pill" id="installBtn" style="display:none">⬇ Install App</button><button class="pill" id="themeBtn">🌙 Dark mode</button></div>
+</header>
+<main class="player-card">
+<div class="player-head"><div><div class="badges"><span class="badge">CAMBRIDGE MOVERS</span><span class="badge">TEST 13 OF 27</span></div>
+<h1>Movers Test 13</h1><p>Listen carefully and complete the tasks in your book.</p></div>
+<div class="status" id="status"><span class="status-dot"></span><span id="statusText">Ready to play</span></div></div>
 
-<div class="offline-box">
-  <div class="offline-copy">
-    <strong>Use this test offline</strong>
-    <span>Download only this test’s audio. This saves storage compared with downloading all 27 files.</span>
-    <span class="offline-status" id="offlineStatus">Checking offline availability…</span>
-  </div>
-  <button class="offline-btn" id="offlineBtn" type="button">Download for Offline</button>
-</div>
+<section class="player-box">
+<audio class="hidden-audio" id="audio" preload="metadata" src="https://zeyn-tedris-merkezi.github.io/audio/Movers%20Test%2013.mp3"></audio>
+<div class="main-control"><button class="play-main" id="playMain" type="button">▶</button>
+<div class="progress-wrap"><div class="progress" id="progress"><span id="bar"></span></div>
+<div class="time-row"><span id="timeText">0:00 / 0:00</span><span id="percentText">0%</span></div></div></div>
+
+<div class="tools"><button class="tool" id="backBtn">↶ 10 sec</button><button class="tool" id="forwardBtn">10 sec ↷</button>
+<select class="speed" id="speed"><option value="0.75">0.75×</option><option value="1">1× speed</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
+<button class="tool" id="restartBtn">Restart</button></div>
+
+<div class="offline-box"><div><strong>Use this test offline</strong><span id="offlineLabel">Download only this test’s audio.</span></div>
+<button class="offline-btn" id="offlineBtn" type="button">Download for Offline</button></div>
+
 <a class="direct" href="https://zeyn-tedris-merkezi.github.io/audio/Movers%20Test%2013.mp3">Open audio directly</a>
-<div class="shortcut-note">Keyboard: Space = Play/Pause · ←/→ = 10 sec · ↑/↓ = Volume · R = Restart</div>
-<div class="complete-panel" id="completePanel"><h3>✔ Great job!</h3><p>Continue to Movers Test 14</p>
-<p>Continuing automatically in <span class="countdown" id="countdown">5</span> seconds.</p><button class="tool-btn" id="cancelNext">Cancel</button>
-</div></section>
+<div class="shortcuts">Keyboard: Space = Play/Pause · ←/→ = 10 sec · ↑/↓ = Volume · R = Restart</div>
+<div class="complete" id="completePanel"><h3>✔ Great job!</h3><p>Next test opens automatically in <b id="countdown">5</b> seconds. <button class="tool" id="cancelNext">Cancel</button></p></div>
+</section>
+
 <nav class="navigation"><a class="nav " href="test12.html">← Previous Test</a><a class="nav primary " href="test14.html">Next Test →</a></nav>
-</main><footer class="footer">© 2026 ZEYN Tədris Mərkəzi<br>Cambridge English Listening Portal · <span class="network-state">Online</span><br>All Rights Reserved.</footer>
-</div><script src="app.js"></script></body></html>
+</main><footer class="footer">© 2026 ZEYN Tədris Mərkəzi<br>Cambridge English Listening Portal · <span class="network">Online</span><br>All Rights Reserved.</footer></div><script src="app.js"></script></body></html>

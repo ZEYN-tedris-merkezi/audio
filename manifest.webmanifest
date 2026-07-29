@@ -1,10 +1,10 @@
 {
-  "name": "ZEYN Listening Portal",
+  "name": "ZEYN English Listening Portal",
   "short_name": "ZEYN Listen",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#f4f7fb",
-  "theme_color": "#2846b8",
+  "theme_color": "#2d49bd",
   "icons": [
     {
       "src": "favicon.png",

@@ -1,21 +1,25 @@
-ZEYN Listening Portal Offline V3
+ZEYN LISTENING PORTAL V4
 
-This version uses selective offline downloads:
-- Portal pages are available offline after the first visit.
-- Each student downloads only the test audio they need.
-- The phone does not automatically download all 27 large MP3 files.
-
-Upload:
-1. Extract this ZIP.
-2. Copy ALL files to the root of the GitHub repository named audio.
+UPLOAD
+1. Extract the ZIP.
+2. Copy ALL files into the root of the GitHub repository named audio.
 3. Replace existing files.
-4. Commit to main and Push origin.
-5. Open:
-   https://zeyn-tedris-merkezi.github.io/audio/?v=3
-6. Use Ctrl+F5 or an Incognito window if an older design appears.
+4. Commit to main.
+5. Push origin.
 
-Testing offline:
-1. Open a test while connected to the internet.
-2. Press “Download for Offline”.
-3. Wait until “Saved Offline” appears.
-4. Turn off internet and reload that test.
+OPEN
+https://zeyn-tedris-merkezi.github.io/audio/?v=4
+
+IMPORTANT
+Because an older Service Worker may remain in the browser:
+- Open the new link in Incognito first, or
+- Press Ctrl+F5.
+- If needed: Chrome Settings > Privacy > Site settings > View permissions/data
+  and remove stored data for zeyn-tedris-merkezi.github.io.
+
+OFFLINE TEST
+1. Open a test while online.
+2. Press Download for Offline.
+3. Wait for “Saved Offline”.
+4. Turn off internet.
+5. Reload that same test.
