@@ -3,8 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movers Test 9 | ZEYN</title>
+  <title>Movers Test 9 | ZEYN Listening Portal</title>
   <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #6b7280;
+      --line: #e5eaf2;
+      --primary: #263f9f;
+      --primary-2: #5a67d8;
+      --soft: #eef3ff;
+      --shadow: 0 18px 50px rgba(20, 33, 61, .14);
+    }
+
+    body.dark {
+      --bg: #111827;
+      --card: #1f2937;
+      --text: #f9fafb;
+      --muted: #cbd5e1;
+      --line: #374151;
+      --primary: #7c8cff;
+      --primary-2: #9aa6ff;
+      --soft: #27324b;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -14,73 +38,99 @@
       min-height: 100vh;
       font-family: Arial, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 35%),
-        radial-gradient(circle at bottom right, rgba(168,85,247,.16), transparent 35%),
-        #f6f8fc;
-      color: #172033;
+        radial-gradient(circle at top left, rgba(90,103,216,.18), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(38,63,159,.15), transparent 35%),
+        var(--bg);
+      color: var(--text);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 22px;
+      padding: 20px;
+      transition: .25s ease;
     }
 
     .page {
-      width: min(100%, 620px);
+      width: min(100%, 680px);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
     .brand {
-      text-align: center;
-      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
     }
 
     .brand-name {
       font-size: 30px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 3px;
     }
 
     .brand-subtitle {
-      margin-top: 4px;
-      color: #667085;
-      font-size: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .theme-toggle {
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 700;
     }
 
     .card {
-      background: rgba(255,255,255,.96);
-      border: 1px solid rgba(255,255,255,.9);
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: 24px;
-      padding: 34px;
-      box-shadow: 0 18px 50px rgba(20, 33, 61, .14);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
     .badge {
-      display: inline-block;
-      background: #eef4ff;
-      color: #3157c8;
+      display: inline-flex;
+      align-items: center;
+      background: var(--soft);
+      color: var(--primary);
       border-radius: 999px;
       padding: 7px 13px;
       font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 16px;
+      font-weight: 800;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(30px, 7vw, 42px);
-      line-height: 1.1;
+      font-size: clamp(30px, 7vw, 44px);
+      line-height: 1.08;
     }
 
     .subtitle {
-      color: #667085;
+      color: var(--muted);
       margin: 10px 0 26px;
       font-size: 16px;
     }
 
-    .player-wrap {
-      padding: 18px;
-      background: #f7f9fd;
-      border-radius: 18px;
-      border: 1px solid #e9edf5;
+    .player-box {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px;
     }
 
     audio {
@@ -88,13 +138,38 @@
       display: block;
     }
 
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .tool-btn, select {
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 11px 10px;
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    .progress {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+
     .direct-link {
       display: inline-block;
       margin-top: 14px;
-      color: #3157c8;
+      color: var(--primary);
       text-decoration: none;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .navigation {
@@ -107,17 +182,17 @@
     .nav-button {
       text-decoration: none;
       text-align: center;
-      padding: 13px 12px;
+      padding: 14px 12px;
       border-radius: 14px;
-      font-weight: 700;
-      border: 1px solid #dce3ef;
-      color: #26324a;
-      background: #fff;
+      font-weight: 800;
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: var(--card);
     }
 
     .nav-button.primary {
-      background: #263f9f;
-      border-color: #263f9f;
+      background: var(--primary);
+      border-color: var(--primary);
       color: white;
     }
 
@@ -128,15 +203,18 @@
 
     .footer {
       text-align: center;
-      color: #98a2b3;
+      color: var(--muted);
       font-size: 12px;
-      margin-top: 16px;
+      margin-top: 15px;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 560px) {
       .card {
-        padding: 24px 18px;
-        border-radius: 20px;
+        padding: 24px 16px;
+      }
+
+      .tools {
+        grid-template-columns: 1fr 1fr;
       }
 
       .navigation {
@@ -147,20 +225,41 @@
 </head>
 <body>
   <div class="page">
-    <div class="brand">
-      <div class="brand-name">ZEYN</div>
-      <div class="brand-subtitle">English Listening Practice</div>
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-name">ZEYN</div>
+        <div class="brand-subtitle">Listening Portal</div>
+      </div>
+      <button class="theme-toggle" id="themeBtn" type="button">🌙 Dark mode</button>
     </div>
 
     <main class="card">
-      <span class="badge">CAMBRIDGE MOVERS</span>
-      <h1>Movers Test 9</h1>
-      <p class="subtitle">Listen carefully and complete the test in your book.</p>
+      <div class="meta">
+        <span class="badge">CAMBRIDGE MOVERS</span>
+        <span class="badge">TEST 9 OF 27</span>
+      </div>
 
-      <section class="player-wrap">
-        <audio controls preload="metadata" src="https://zeyn-tedris-merkezi.github.io/audio/Movers%20Test%209.mp3">
+      <h1>Movers Test 9</h1>
+      <p class="subtitle">Listen carefully and complete the tasks in your book.</p>
+
+      <section class="player-box">
+        <audio id="audio" controls preload="metadata" src="https://zeyn-tedris-merkezi.github.io/audio/Movers%20Test%209.mp3">
           Your browser does not support audio playback.
         </audio>
+
+        <div class="tools">
+          <button class="tool-btn" id="backBtn" type="button">↶ 10 sec</button>
+          <button class="tool-btn" id="forwardBtn" type="button">10 sec ↷</button>
+          <select id="speed" aria-label="Playback speed">
+            <option value="0.75">0.75×</option>
+            <option value="1" selected>1× speed</option>
+            <option value="1.25">1.25×</option>
+            <option value="1.5">1.5×</option>
+          </select>
+          <button class="tool-btn" id="restartBtn" type="button">Restart</button>
+        </div>
+
+        <div class="progress" id="progressText">Ready to play</div>
         <a class="direct-link" href="https://zeyn-tedris-merkezi.github.io/audio/Movers%20Test%209.mp3">Open audio directly</a>
       </section>
 
@@ -172,5 +271,57 @@
 
     <div class="footer">ZEYN Tədris Mərkəzi</div>
   </div>
+
+  <script>
+    const audio = document.getElementById('audio');
+    const progressText = document.getElementById('progressText');
+    const speed = document.getElementById('speed');
+    const themeBtn = document.getElementById('themeBtn');
+
+    document.getElementById('backBtn').addEventListener('click', () => {
+      audio.currentTime = Math.max(0, audio.currentTime - 10);
+    });
+
+    document.getElementById('forwardBtn').addEventListener('click', () => {
+      audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + 10);
+    });
+
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      audio.currentTime = 0;
+      audio.play();
+    });
+
+    speed.addEventListener('change', () => {
+      audio.playbackRate = Number(speed.value);
+    });
+
+    function formatTime(seconds) {
+      if (!Number.isFinite(seconds)) return '0:00';
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
+      return `${mins}:${secs}`;
+    }
+
+    audio.addEventListener('timeupdate', () => {
+      progressText.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+    });
+
+    audio.addEventListener('ended', () => {
+      progressText.textContent = 'Audio completed';
+    });
+
+    const savedTheme = localStorage.getItem('zeyn-theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
+      themeBtn.textContent = '☀️ Light mode';
+    }
+
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      themeBtn.textContent = isDark ? '☀️ Light mode' : '🌙 Dark mode';
+      localStorage.setItem('zeyn-theme', isDark ? 'dark' : 'light');
+    });
+  </script>
 </body>
 </html>
