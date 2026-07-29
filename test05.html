@@ -1,23 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Movers Test 5</title>
-<style>
-body{font-family:Arial,sans-serif;background:#f5f7fb;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0}
-.card{background:#fff;padding:30px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.12);width:min(90%,520px);text-align:center}
-audio{width:100%;margin-top:20px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movers Test 5</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+    .card {
+      width: min(90%, 520px);
+      background: #ffffff;
+      padding: 32px;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+      text-align: center;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+    p {
+      margin: 0 0 24px;
+      color: #6b7280;
+    }
+    audio {
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
-<div class="card">
-<h1>Movers Test 5</h1>
-<p>Listening Audio</p>
-<audio controls preload="metadata">
-<source src="Movers%20Test%205%281%29.mp3" type="audio/mpeg">
-Your browser does not support audio.
-</audio>
-</div>
+  <main class="card">
+    <h1>Movers Test 5</h1>
+    <p>Listening Audio</p>
+    <audio controls preload="metadata">
+      <source src="Movers%20Test%205.mp3" type="audio/mpeg">
+      Your browser does not support audio playback.
+    </audio>
+  </main>
 </body>
 </html>
