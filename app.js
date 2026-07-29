@@ -85,3 +85,34 @@ function setupPlayer(){
 window.addEventListener('load',()=>setTimeout(()=>$('#loading')?.classList.add('hide'),350));
 document.addEventListener('DOMContentLoaded',()=>{applyTheme();$('#themeBtn')?.addEventListener('click',toggleTheme);setupInstall();setupIndex();setupPlayer()});
 if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+
+
+function setupDashboard(){
+  const completed = JSON.parse(localStorage.getItem('zeyn-completed') || '[]');
+  const unique = [...new Set(completed.map(Number).filter(n=>n>=1&&n<=27))];
+  const done = unique.length, remaining = 27-done, pct = Math.round(done/27*100);
+  const c=document.querySelector('#completedCount'), r=document.querySelector('#remainingCount'),
+        p=document.querySelector('#dashboardBar'), t=document.querySelector('#dashboardText');
+  if(c)c.textContent=done;
+  if(r)r.textContent=remaining;
+  if(p)p.style.width=pct+'%';
+  if(t)t.textContent=`${done} of 27 tests completed`;
+}
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){
+    e.preventDefault();document.querySelector('#search')?.focus();
+  }
+});
+document.addEventListener('DOMContentLoaded',setupDashboard);
+
+const originalSetupPlayer = setupPlayer;
+setupPlayer = function(){
+  originalSetupPlayer();
+  const audio=document.querySelector('#audio');
+  if(!audio)return;
+  const test=Number(document.body.dataset.test);
+  audio.addEventListener('ended',()=>{
+    const completed=JSON.parse(localStorage.getItem('zeyn-completed')||'[]');
+    if(!completed.includes(test)){completed.push(test);localStorage.setItem('zeyn-completed',JSON.stringify(completed))}
+  });
+};
