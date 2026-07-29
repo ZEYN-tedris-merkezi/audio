@@ -1,0 +1,10 @@
+ZEYN Professional Listening Portal
+
+Upload ALL files in this folder to the root of the GitHub repository:
+https://github.com/ZEYN-tedris-merkezi/audio
+
+Replace existing test01.html-test27.html and index.html.
+Then commit and push.
+
+Main address:
+https://zeyn-tedris-merkezi.github.io/audio/

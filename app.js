@@ -1,0 +1,87 @@
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+function applyTheme(){
+  const saved=localStorage.getItem('zeyn-theme');
+  if(saved==='dark') document.body.classList.add('dark');
+  const b=$('#themeBtn'); if(b) b.textContent=document.body.classList.contains('dark')?'☀️ Light mode':'🌙 Dark mode';
+}
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  localStorage.setItem('zeyn-theme',document.body.classList.contains('dark')?'dark':'light');
+  applyTheme();
+}
+function setupInstall(){
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt',e=>{
+    e.preventDefault(); deferredPrompt=e;
+    const b=$('#installBtn'); if(b) b.style.display='inline-flex';
+  });
+  const b=$('#installBtn');
+  if(b) b.addEventListener('click',async()=>{
+    if(!deferredPrompt){alert('Use your browser menu and choose “Add to Home Screen”.');return}
+    deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; b.style.display='none';
+  });
+}
+function setupIndex(){
+  const last=localStorage.getItem('zeyn-last-test');
+  if(last){
+    const n=parseInt(last,10), c=$('#continueCard');
+    c.href=`test${String(n).padStart(2,'0')}.html`;
+    $('#continueTitle').textContent=`Movers Test ${n}`;
+    c.classList.add('show');
+  }
+  const search=$('#search');
+  if(search) search.addEventListener('input',()=>{
+    const q=search.value.trim().toLowerCase();
+    $$('.test-card').forEach(card=>{
+      card.style.display=card.dataset.search.includes(q)?'grid':'none';
+    });
+  });
+}
+function fmt(s){if(!Number.isFinite(s))return '0:00';const m=Math.floor(s/60),x=Math.floor(s%60).toString().padStart(2,'0');return `${m}:${x}`}
+function setupPlayer(){
+  const audio=$('#audio'); if(!audio)return;
+  const test=Number(document.body.dataset.test);
+  localStorage.setItem('zeyn-last-test',String(test));
+  const savedSpeed=Number(localStorage.getItem('zeyn-speed')||1);
+  audio.playbackRate=savedSpeed; $('#speed').value=String(savedSpeed);
+  const status=$('#status'), text=$('#statusText'), bar=$('#bar'), time=$('#timeText'), percent=$('#percentText');
+  const setStatus=(label,cls='')=>{text.textContent=label;status.className='status '+cls}
+  audio.addEventListener('play',()=>setStatus('Listening…','listening'));
+  audio.addEventListener('pause',()=>{if(!audio.ended)setStatus('Paused')});
+  audio.addEventListener('loadedmetadata',()=>time.textContent=`0:00 / ${fmt(audio.duration)}`);
+  audio.addEventListener('timeupdate',()=>{
+    const p=audio.duration?audio.currentTime/audio.duration*100:0;
+    bar.style.width=p+'%'; time.textContent=`${fmt(audio.currentTime)} / ${fmt(audio.duration)}`; percent.textContent=Math.round(p)+'%';
+    localStorage.setItem(`zeyn-progress-${test}`,String(audio.currentTime));
+  });
+  const old=Number(localStorage.getItem(`zeyn-progress-${test}`)||0);
+  audio.addEventListener('loadedmetadata',()=>{if(old>5&&old<audio.duration-10)audio.currentTime=old},{once:true});
+  $('#backBtn').onclick=()=>audio.currentTime=Math.max(0,audio.currentTime-10);
+  $('#forwardBtn').onclick=()=>audio.currentTime=Math.min(audio.duration||Infinity,audio.currentTime+10);
+  $('#restartBtn').onclick=()=>{audio.currentTime=0;audio.play()};
+  $('#playBtn').onclick=()=>audio.paused?audio.play():audio.pause();
+  $('#speed').onchange=e=>{audio.playbackRate=Number(e.target.value);localStorage.setItem('zeyn-speed',e.target.value)};
+  $('#progress').onclick=e=>{if(audio.duration){const r=e.currentTarget.getBoundingClientRect();audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration}};
+  document.addEventListener('keydown',e=>{
+    if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;
+    if(e.code==='Space'){e.preventDefault();audio.paused?audio.play():audio.pause()}
+    if(e.key==='ArrowLeft')audio.currentTime=Math.max(0,audio.currentTime-10);
+    if(e.key==='ArrowRight')audio.currentTime=Math.min(audio.duration||Infinity,audio.currentTime+10);
+    if(e.key==='ArrowUp')audio.volume=Math.min(1,audio.volume+.1);
+    if(e.key==='ArrowDown')audio.volume=Math.max(0,audio.volume-.1);
+    if(e.key.toLowerCase()==='r'){audio.currentTime=0;audio.play()}
+  });
+  let timer;
+  audio.addEventListener('ended',()=>{
+    setStatus('Completed','done');localStorage.removeItem(`zeyn-progress-${test}`);
+    const panel=$('#completePanel');panel.classList.add('show');
+    if(test<27){let n=5;$('#countdown').textContent=n;timer=setInterval(()=>{n--;$('#countdown').textContent=n;if(n<=0){clearInterval(timer);location.href=`test${String(test+1).padStart(2,'0')}.html`}},1000)}
+  });
+  $('#cancelNext')?.addEventListener('click',()=>{clearInterval(timer);$('#completePanel').classList.remove('show')});
+}
+window.addEventListener('load',()=>setTimeout(()=>$('#loading')?.classList.add('hide'),350));
+document.addEventListener('DOMContentLoaded',()=>{applyTheme();$('#themeBtn')?.addEventListener('click',toggleTheme);setupInstall();setupIndex();setupPlayer()});
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));

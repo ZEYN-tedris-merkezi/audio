@@ -1,488 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZEYN Listening Portal</title>
-  <style>
-    :root {
-      --bg: #f4f7fb;
-      --card: #ffffff;
-      --text: #172033;
-      --muted: #6b7280;
-      --line: #e5eaf2;
-      --primary: #263f9f;
-      --soft: #eef3ff;
-      --shadow: 0 16px 45px rgba(20, 33, 61, .12);
-    }
-
-    body.dark {
-      --bg: #111827;
-      --card: #1f2937;
-      --text: #f9fafb;
-      --muted: #cbd5e1;
-      --line: #374151;
-      --primary: #7c8cff;
-      --soft: #27324b;
-      --shadow: 0 16px 45px rgba(0,0,0,.35);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(90,103,216,.18), transparent 35%),
-        radial-gradient(circle at bottom right, rgba(38,63,159,.15), transparent 35%),
-        var(--bg);
-      color: var(--text);
-      transition: .25s ease;
-    }
-
-    .container {
-      width: min(1100px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 28px 0 40px;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 28px;
-    }
-
-    .brand-name {
-      font-size: 32px;
-      font-weight: 900;
-      letter-spacing: 3px;
-    }
-
-    .brand-subtitle {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 4px;
-    }
-
-    .theme-toggle {
-      border: 1px solid var(--line);
-      background: var(--card);
-      color: var(--text);
-      border-radius: 999px;
-      padding: 10px 14px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    .hero {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: 38px;
-      box-shadow: var(--shadow);
-      margin-bottom: 24px;
-    }
-
-    .badge {
-      display: inline-block;
-      background: var(--soft);
-      color: var(--primary);
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(36px, 7vw, 62px);
-      line-height: 1.02;
-    }
-
-    .hero p {
-      margin: 14px 0 0;
-      color: var(--muted);
-      font-size: 17px;
-      max-width: 680px;
-      line-height: 1.6;
-    }
-
-    .section-title {
-      font-size: 22px;
-      margin: 30px 0 14px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-
-    .test-card {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 14px;
-      text-decoration: none;
-      color: var(--text);
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 8px 24px rgba(20, 33, 61, .07);
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-
-    .test-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow);
-    }
-
-    .icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 15px;
-      background: var(--soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-    }
-
-    .test-title {
-      font-weight: 800;
-      font-size: 17px;
-    }
-
-    .test-subtitle {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 4px;
-    }
-
-    .arrow {
-      color: var(--primary);
-      font-size: 22px;
-      font-weight: 900;
-    }
-
-    .footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 26px;
-    }
-
-    @media (max-width: 850px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 560px) {
-      .container {
-        width: min(100% - 20px, 1100px);
-      }
-
-      .hero {
-        padding: 26px 20px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="topbar">
-      <div>
-        <div class="brand-name">ZEYN</div>
-        <div class="brand-subtitle">Listening Portal</div>
-      </div>
-      <button class="theme-toggle" id="themeBtn" type="button">🌙 Dark mode</button>
-    </div>
-
-    <section class="hero">
-      <span class="badge">CAMBRIDGE MOVERS</span>
-      <h1>Listening Practice</h1>
-      <p>Select a test below, listen to the audio, and complete the tasks in your book.</p>
-    </section>
-
-    <h2 class="section-title">Choose a Test</h2>
-
-    <section class="grid">
-      
-      <a class="test-card" href="test01.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 1</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test02.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 2</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test03.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 3</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test04.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 4</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test05.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 5</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test06.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 6</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test07.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 7</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test08.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 8</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test09.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 9</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test10.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 10</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test11.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 11</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test12.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 12</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test13.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 13</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test14.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 14</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test15.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 15</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test16.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 16</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test17.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 17</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test18.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 18</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test19.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 19</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test20.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 20</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test21.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 21</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test22.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 22</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test23.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 23</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test24.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 24</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test25.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 25</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test26.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 26</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-      <a class="test-card" href="test27.html">
-        <div class="icon">🎧</div>
-        <div>
-          <div class="test-title">Movers Test 27</div>
-          <div class="test-subtitle">Listening Practice</div>
-        </div>
-        <div class="arrow">→</div>
-      </a>
-    
-    </section>
-
-    <div class="footer">ZEYN Tədris Mərkəzi</div>
-  </div>
-
-  <script>
-    const themeBtn = document.getElementById('themeBtn');
-    const savedTheme = localStorage.getItem('zeyn-theme');
-
-    if (savedTheme === 'dark') {
-      document.body.classList.add('dark');
-      themeBtn.textContent = '☀️ Light mode';
-    }
-
-    themeBtn.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      const isDark = document.body.classList.contains('dark');
-      themeBtn.textContent = isDark ? '☀️ Light mode' : '🌙 Dark mode';
-      localStorage.setItem('zeyn-theme', isDark ? 'dark' : 'light');
-    });
-  </script>
-</body>
-</html>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZEYN Listening Portal</title>
+<link rel="icon" href="favicon.png"><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css">
+<meta name="theme-color" content="#2846b8"></head><body>
+<div class="loading" id="loading"><img src="zeyn-logo.png" alt="ZEYN"></div>
+<div class="shell">
+<header class="topbar"><a class="brand" href="index.html"><img src="zeyn-logo.png"><div class="brand-copy"><strong>ZEYN</strong><span>Listening Portal</span></div></a>
+<div class="actions"><button class="pill-btn" id="installBtn" style="display:none">⬇ Install App</button><button class="pill-btn" id="themeBtn">🌙 Dark mode</button></div></header>
+<section class="hero"><div><div class="badges"><span class="badge">CAMBRIDGE MOVERS</span><span class="badge">QR AUDIO PORTAL</span></div>
+<h1>Listen. Learn. Progress.</h1><p>Scan the QR code, choose your test, listen carefully, and complete the tasks in your book. Your progress and playback speed are remembered automatically.</p></div>
+<div class="hero-art"><img src="zeyn-brand-photo.jpg" alt="ZEYN Tədris Mərkəzi"><div class="scan-label">🎧 Scan the QR code and listen</div></div></section>
+<a class="continue" id="continueCard"><div><small>Continue where you left off</small><strong id="continueTitle">Movers Test</strong></div><b>Continue →</b></a>
+<section class="collection">
+<div class="collection-card"><div>⭐</div><h3>Starters</h3><p>Coming soon</p></div>
+<div class="collection-card active"><div>🟢</div><h3>Movers</h3><p>27 listening tests</p></div>
+<div class="collection-card"><div>🔵</div><h3>Flyers</h3><p>Coming soon</p></div>
+</section>
+<div class="section-head"><h2>Choose a Test</h2><input class="search" id="search" placeholder="🔍 Search test number..."></div>
+<section class="grid"><a class="test-card" data-search="movers test 1 listening 1" href="test01.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 1</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 2 listening 2" href="test02.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 2</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 3 listening 3" href="test03.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 3</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 4 listening 4" href="test04.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 4</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 5 listening 5" href="test05.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 5</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 6 listening 6" href="test06.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 6</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 7 listening 7" href="test07.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 7</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 8 listening 8" href="test08.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 8</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 9 listening 9" href="test09.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 9</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 10 listening 10" href="test10.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 10</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 11 listening 11" href="test11.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 11</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 12 listening 12" href="test12.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 12</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 13 listening 13" href="test13.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 13</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 14 listening 14" href="test14.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 14</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 15 listening 15" href="test15.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 15</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 16 listening 16" href="test16.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 16</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 17 listening 17" href="test17.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 17</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 18 listening 18" href="test18.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 18</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 19 listening 19" href="test19.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 19</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 20 listening 20" href="test20.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 20</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 21 listening 21" href="test21.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 21</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 22 listening 22" href="test22.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 22</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 23 listening 23" href="test23.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 23</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 24 listening 24" href="test24.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 24</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 25 listening 25" href="test25.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 25</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 26 listening 26" href="test26.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 26</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a>
+<a class="test-card" data-search="movers test 27 listening 27" href="test27.html">
+      <div class="test-icon">🎧</div><div><strong>Movers Test 27</strong><span>Listening Practice</span></div><div class="arrow">→</div>
+    </a></section>
+<footer class="footer">© 2026 ZEYN Tədris Mərkəzi<br>All Rights Reserved.</footer>
+</div><script src="app.js"></script></body></html>
