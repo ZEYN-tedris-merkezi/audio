@@ -116,3 +116,99 @@ setupPlayer = function(){
     if(!completed.includes(test)){completed.push(test);localStorage.setItem('zeyn-completed',JSON.stringify(completed))}
   });
 };
+
+
+async function getSWRegistration(){
+  if(!('serviceWorker' in navigator)) return null;
+  try{
+    return await navigator.serviceWorker.ready;
+  }catch(e){
+    return null;
+  }
+}
+
+function sendSWMessage(message){
+  return new Promise(async(resolve,reject)=>{
+    const reg=await getSWRegistration();
+    if(!reg || !reg.active){reject(new Error('Service Worker unavailable'));return;}
+    const channel=new MessageChannel();
+    channel.port1.onmessage=e=>{
+      if(e.data && e.data.ok) resolve(e.data);
+      else reject(new Error((e.data && e.data.error) || 'Offline operation failed'));
+    };
+    reg.active.postMessage(message,[channel.port2]);
+  });
+}
+
+async function isAudioCached(url){
+  try{
+    const result=await sendSWMessage({type:'IS_AUDIO_CACHED',url});
+    return !!result.cached;
+  }catch(e){
+    return false;
+  }
+}
+
+async function updateOfflineButton(){
+  const btn=document.querySelector('#offlineBtn');
+  const audio=document.querySelector('#audio');
+  const status=document.querySelector('#offlineStatus');
+  if(!btn || !audio) return;
+
+  if(!('serviceWorker' in navigator)){
+    btn.disabled=true;
+    btn.textContent='Offline not supported';
+    if(status) status.textContent='This browser does not support offline mode.';
+    return;
+  }
+
+  const cached=await isAudioCached(audio.src);
+  if(cached){
+    btn.disabled=true;
+    btn.classList.add('ready');
+    btn.textContent='✓ Saved Offline';
+    if(status){
+      status.classList.add('ready');
+      status.textContent='This audio is available without internet.';
+    }
+  }
+}
+
+function setupOfflineAudio(){
+  const btn=document.querySelector('#offlineBtn');
+  const audio=document.querySelector('#audio');
+  const status=document.querySelector('#offlineStatus');
+  if(!btn || !audio) return;
+
+  updateOfflineButton();
+
+  btn.addEventListener('click',async()=>{
+    btn.disabled=true;
+    btn.textContent='Downloading…';
+    if(status){
+      status.classList.remove('ready');
+      status.textContent='Keep this page open until the download finishes.';
+    }
+
+    try{
+      await sendSWMessage({type:'CACHE_AUDIO',url:audio.src});
+      btn.classList.add('ready');
+      btn.textContent='✓ Saved Offline';
+      if(status){
+        status.classList.add('ready');
+        status.textContent='This audio is now available without internet.';
+      }
+    }catch(e){
+      btn.disabled=false;
+      btn.textContent='Download for Offline';
+      if(status) status.textContent='Download failed. Check your internet connection and try again.';
+    }
+  });
+}
+
+window.addEventListener('online',()=>document.querySelectorAll('.network-state').forEach(x=>x.textContent='Online'));
+window.addEventListener('offline',()=>document.querySelectorAll('.network-state').forEach(x=>x.textContent='Offline mode'));
+document.addEventListener('DOMContentLoaded',()=>{
+  setupOfflineAudio();
+  document.querySelectorAll('.network-state').forEach(x=>x.textContent=navigator.onLine?'Online':'Offline mode');
+});

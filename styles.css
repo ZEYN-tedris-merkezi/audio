@@ -115,3 +115,55 @@ audio{width:100%;display:block}
 .shortcut-note{color:var(--muted);font-size:12px;margin-top:12px}
 @media(max-width:900px){.hero{grid-template-columns:1fr}.hero-art{min-height:280px}.dashboard{grid-template-columns:1fr 1fr}.dashboard-card:first-child{grid-column:1/-1}.grid{grid-template-columns:repeat(2,1fr)}.tools{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:560px){.shell{width:min(100% - 18px,1140px)}.hero,.card{padding:23px 17px}.grid,.collection,.dashboard{grid-template-columns:1fr}.dashboard-card:first-child{grid-column:auto}.section-head{align-items:stretch;flex-direction:column}.search-wrap{width:100%}.player-head{flex-direction:column}.tools{grid-template-columns:1fr 1fr}.navigation{grid-template-columns:1fr}.brand img{width:56px;height:56px}.brand-copy strong{font-size:24px}.hero-art{order:2}.hero h1{letter-spacing:-1px}}
+
+
+/* Offline controls */
+.offline-box{
+  margin-top:16px;
+  padding:16px;
+  border:1px solid var(--line);
+  background:var(--card);
+  border-radius:17px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+.offline-copy strong{display:block;font-size:14px}
+.offline-copy span{display:block;color:var(--muted);font-size:12px;margin-top:4px;line-height:1.45}
+.offline-btn{
+  border:0;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:#fff;
+  border-radius:13px;
+  padding:11px 14px;
+  font-weight:900;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.offline-btn:disabled{opacity:.65;cursor:default}
+.offline-btn.ready{background:var(--success)}
+.offline-note{
+  margin:18px 0 0;
+  padding:14px 16px;
+  border:1px solid var(--line);
+  background:var(--soft);
+  border-radius:16px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.55;
+}
+.offline-status{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-top:8px;
+  font-weight:900;
+  font-size:12px;
+  color:var(--muted);
+}
+.offline-status.ready{color:var(--success)}
+@media(max-width:560px){
+  .offline-box{align-items:stretch;flex-direction:column}
+  .offline-btn{width:100%}
+}
