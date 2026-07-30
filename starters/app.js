@@ -51,13 +51,19 @@
     if (continueLabel) continueLabel.textContent = `Continue with Test ${lastTest}`;
 
     document.querySelectorAll('.test-card').forEach(card => {
-      const n = Number(card.dataset.test);
-      const done = localStorage.getItem(`starters-completed-${n}`) === '1';
-      card.classList.toggle('completed-card', done);
-      const badge = card.querySelector('.done-badge');
-      if (badge) {
-        badge.hidden = !done;
-        badge.style.display = done ? 'inline-flex' : 'none';
+      const testNumber = Number(card.dataset.test);
+      const isCompleted = localStorage.getItem(`starters-completed-${testNumber}`) === '1';
+
+      card.classList.toggle('completed-card', isCompleted);
+
+      const existingBadge = card.querySelector('.done-badge');
+      if (existingBadge) existingBadge.remove();
+
+      if (isCompleted) {
+        const badge = document.createElement('span');
+        badge.className = 'done-badge';
+        badge.textContent = '✓ Completed';
+        card.appendChild(badge);
       }
     });
   }
