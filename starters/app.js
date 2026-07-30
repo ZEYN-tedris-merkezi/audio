@@ -38,10 +38,12 @@
     const completed = completedCount();
     const progressText = document.getElementById('progressText');
     const progressFill = document.getElementById('overallProgressFill');
+    const remainingText = document.getElementById('remainingText');
     const continueLink = document.getElementById('continueLink');
     const continueLabel = document.getElementById('continueLabel');
 
     if (progressText) progressText.textContent = `${completed} / ${TOTAL} completed`;
+    if (remainingText) remainingText.textContent = `${TOTAL - completed} remaining`;
     if (progressFill) progressFill.style.width = `${(completed / TOTAL) * 100}%`;
 
     const lastTest = Math.min(Math.max(getLastTest(), 1), TOTAL);
@@ -53,7 +55,10 @@
       const done = localStorage.getItem(`starters-completed-${n}`) === '1';
       card.classList.toggle('completed-card', done);
       const badge = card.querySelector('.done-badge');
-      if (badge) badge.hidden = !done;
+      if (badge) {
+        badge.hidden = !done;
+        badge.style.display = done ? 'inline-flex' : 'none';
+      }
     });
   }
 
